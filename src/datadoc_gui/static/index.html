@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Datendokumentation</title>
+<link rel="icon" type="image/png" href="/static/marke/aitraqc-logo-compact.png">
+<script src="/static/thema.js"></script>
+<link rel="stylesheet" href="/static/style.css">
+<script type="module" src="/static/app.js"></script>
+</head>
+<body>
+<header class="kopf">
+	<div class="marke">
+		<span class="logo-rahmen"><img class="logo" src="/static/marke/aitraqc-logo-compact.png" alt="AI TRAQC" width="48" height="40"></span>
+		<h1>Datendokumentations-Assistent</h1>
+		<span id="status" class="status"></span>
+	</div>
+	<div class="steuerung">
+		<div id="kontext" class="kontext" hidden>
+			<span>Kontext</span>
+			<div class="balken" role="progressbar" aria-label="Belegtes Kontextfenster" aria-valuemin="0" aria-valuemax="100"><div id="kontext-wert" class="balken-wert"></div></div>
+			<span id="kontext-text" class="kontext-text"></span>
+		</div>
+		<label class="modellwahl">Modell <select id="modell" aria-label="Sprachmodell"></select></label>
+		<button id="thema" class="knopf link nur-ikon" type="button"></button>
+		<button id="neu" class="knopf zweitrangig" type="button" data-ikon="rotate-ccw">Neu beginnen</button>
+	</div>
+</header>
+<div class="channel-rule" aria-hidden="true"></div>
+
+<div id="fehlerbanner" class="banner" hidden>
+	<span id="fehlertext"></span>
+	<button id="neustart" class="knopf" type="button">Neu starten</button>
+</div>
+
+<main class="layout">
+	<section class="chat" aria-label="Gespräch">
+		<div id="verlauf" class="verlauf" aria-live="polite">
+			<div id="leer" class="leer">
+				<span data-ikon="messages-square"></span>
+				<h2>Willkommen</h2>
+				<p>Wählen Sie rechts eine Datei und klicken Sie auf <strong>Dokumentieren</strong>, oder schreiben Sie dem Assistenten direkt.</p>
+				<p>Ihre Tabelle analysiert ein Python-Programm auf diesem Rechner. Der Assistent sieht nur dessen Zusammenfassung, personenbezogene Werte maskiert. Jede Bedeutung bestätigen Sie selbst.</p>
+			</div>
+		</div>
+		<div id="dialog" class="dialogbereich"></div>
+		<div id="arbeitet" class="arbeitet" hidden><span class="punkte" aria-hidden="true"><i></i><i></i><i></i></span><span id="arbeitet-text"></span></div>
+		<form id="eingabe" class="eingabe">
+			<div class="eingabe-box">
+				<textarea id="text" rows="2" placeholder="Nachricht an den Assistenten …" aria-label="Nachricht" aria-describedby="tasten"></textarea>
+				<div class="eingabe-knoepfe">
+					<button type="submit" id="senden" class="knopf klein-knopf" data-ikon="send">Senden</button>
+					<button type="button" id="stopp" class="knopf klein-knopf gefahr" data-ikon="square" hidden>Stopp</button>
+				</div>
+			</div>
+			<p id="tasten" class="tasten">Enter sendet · Umschalt+Enter für neue Zeile</p>
+		</form>
+	</section>
+
+	<aside class="seite">
+		<section class="karte">
+			<h2 data-ikon="folder-open">Dateien</h2>
+			<ul id="dateien" class="dateiliste"></ul>
+			<div id="ablage" class="ablage">
+				<span data-ikon="upload"></span>
+				<p>CSV- oder Excel-Datei hierher ziehen<br>oder <label class="dateiwahl">Datei wählen<input id="datei" type="file" accept=".csv,.xlsx" hidden></label></p>
+				<small>höchstens 50 MB · wird in den Ordner daten/ kopiert</small>
+			</div>
+		</section>
+
+		<section id="fortschritt-karte" class="karte" hidden>
+			<h2 data-ikon="chart-no-axes-column">Fortschritt</h2>
+			<p id="fortschritt-datei" class="klein code"></p>
+			<div class="balken" role="progressbar" aria-label="Geprüfte Spalten"><div id="balken-wert" class="balken-wert"></div></div>
+			<p id="fortschritt-text" class="fortschritt-text"></p>
+			<p id="datasheet-text" class="klein"></p>
+		</section>
+
+		<section id="spalten-karte" class="karte" hidden>
+			<h2 data-ikon="table">Spalten</h2>
+			<table class="spalten">
+				<thead><tr><th><span class="unsichtbar">Ampel</span></th><th>Spalte</th><th>Name</th><th>Status</th></tr></thead>
+				<tbody id="spalten"></tbody>
+			</table>
+			<p class="klein">Zeile anklicken für die Befunde.</p>
+		</section>
+
+		<section id="ergebnisse-karte" class="karte" hidden>
+			<h2 data-ikon="file-text">Ergebnisse</h2>
+			<p id="ergebnisse-stand" class="klein"></p>
+			<ul id="ergebnisse" class="dateiliste"></ul>
+		</section>
+	</aside>
+</main>
+
+<div id="modal" class="modal" hidden>
+	<div class="modal-inhalt" role="dialog" aria-modal="true" aria-labelledby="modal-titel">
+		<div class="modal-kopf">
+			<h2 id="modal-titel"></h2>
+			<button id="modal-zu" class="knopf zweitrangig" type="button">Schließen</button>
+		</div>
+		<div id="modal-text" class="modal-text"></div>
+		<div id="modal-knoepfe" class="knoepfe"></div>
+	</div>
+</div>
+
+<div id="toasts" class="toasts" aria-live="polite"></div>
+</body>
+</html>

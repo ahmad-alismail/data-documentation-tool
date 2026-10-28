@@ -1,0 +1,10 @@
+{
+  "defaultProvider": "ollama",
+  "defaultModel": "gemma4:26b-a4b-it-q4_K_M",
+  "defaultThinkingLevel": "off",
+  "defaultTools": [],
+  "enableInstallTelemetry": false,
+  "enableAnalytics": false,
+  "quietStartup": "header",
+  "lastChangelogVersion": "1.1.0"
+}
